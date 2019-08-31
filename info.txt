@@ -1,0 +1,6 @@
+суперпользователь в админку postgres:
+    postgres
+    OCH661Jlpw
+пользователь для приложения:
+    uni_game
+    qwerty
