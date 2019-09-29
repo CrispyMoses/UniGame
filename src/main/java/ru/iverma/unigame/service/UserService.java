@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.iverma.unigame.dto.UserDto;
 import ru.iverma.unigame.entity.User;
+import ru.iverma.unigame.exception.AuthorizeException;
 import ru.iverma.unigame.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -19,7 +20,7 @@ public class UserService {
 	@Transactional
 	public Long registerUser(UserDto dto) {
 		if (repository.getByLogin(dto.getUsername()) != null) {
-			throw new IllegalArgumentException("Логин занят");
+			throw new AuthorizeException("Логин занят");
 		}
 		var user = new User();
 		user.setLogin(dto.getUsername());
@@ -31,7 +32,7 @@ public class UserService {
 	}
 
 	public void checkUserLogin(UserDto dto) {
-		User user = repository.getByLogin(dto.getUsername());
+		var user = repository.getByLogin(dto.getUsername());
 		if (user == null) {
 			throw new IllegalArgumentException("Пользователя с таким логином не существует");
 		}
